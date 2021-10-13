@@ -1,0 +1,32 @@
+#msg-cnt{
+    background-color: #faffff ;
+    margin: 2rem 0rem 0rem 0rem;
+    border-radius: 1rem 1rem 1rem /1rem 1rem;
+    /* height: initial; */
+    overflow-y: auto;
+    /* background-color: red; */
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+    padding: 0.5rem 0rem !important;
+}
+#msg-cnt::-webkit-scrollbar-track{
+    background-color: #e0f8fa !important;
+    border-radius: 1rem 1rem 1rem /1rem 1rem;
+    border: none;
+}
+
+*::-webkit-scrollbar{
+    width: 0.5em;
+  }
+   
+*::-webkit-scrollbar-track{
+}
+*::-webkit-scrollbar-thumb{
+  background-color: teal;
+}
+
+#msg-cnt::-webkit-scrollbar-thumb{
+    height: 10px !important;
+    background-color: #c2ecf0 !important;
+    border-radius: 1rem 1rem 1rem /1rem 1rem;
+  }

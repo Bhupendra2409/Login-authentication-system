@@ -1,0 +1,7 @@
+.center-cnt{
+    display: grid;
+    height: 100vh !important;
+    grid-template-rows: auto 1fr auto;
+    padding: 1rem 3rem;
+    border-left: 2px solid rgb(223, 223, 223);
+}

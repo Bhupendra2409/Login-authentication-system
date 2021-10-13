@@ -1,0 +1,35 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+.upper-cnt{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    max-width: 500px;
+}
+.outer-cnt{
+    max-width: 400px;
+    min-width: fit-content;
+    min-height: fit-content !important;
+    background-color: rgb(228, 228, 228);
+    margin: auto auto;
+}
+.big-cnt{
+    height: 100vh;
+}
+.login-form-cnt{
+    min-height: fit-content;
+    padding-top: 1rem;
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+.login-page-btn{
+    width: fit-content;
+    margin: 0rem auto;
+}
+.input-data{
+    display: flex;
+    flex-direction: column;
+    min-height: fit-content;
+    padding-bottom: 2rem;
+}
