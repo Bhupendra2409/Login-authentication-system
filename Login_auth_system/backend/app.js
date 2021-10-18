@@ -32,7 +32,7 @@ app.use('/api/private',privateRouter);
 app.use(errorHandler)
 // let server = http.createServer(app);
 let server = app.listen(port,()=>{
-    console.log('server is running');
+    console.log(`server is running on port ${port}`);
 });
 
 process.on('unhandledRejection',(err,promise)=>{
