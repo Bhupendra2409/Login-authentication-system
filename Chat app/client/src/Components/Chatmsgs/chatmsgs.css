@@ -1,9 +1,0 @@
-.cw{
-    height: 100%;
-    width: 100%;
-    margin: 1rem auto;
-    border-radius: 1rem 1rem 1rem/1rem 1rem;
-    background-color: rgb(131, 110, 175);
-    overflow-y: scroll;
-    scrollbar-gutter: stable;
-}
