@@ -15,7 +15,7 @@ app.use(express.json());
 
 
 let authRouter = require('./routes/auth');
-
+let privateRouter = require('./routes/private');
 
 app.use(function(req,res,next){
     res.header("Access-Control-Allow-Origin","*");
@@ -27,6 +27,7 @@ app.use(function(req,res,next){
 
 app.use(express.urlencoded({ extended: false }));
 app.use('/api/auth',authRouter);
+app.use('/api/private',privateRouter);
 
 app.use(errorHandler)
 // let server = http.createServer(app);

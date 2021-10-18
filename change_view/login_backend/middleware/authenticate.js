@@ -1,25 +1,31 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+const ErrorResponse = require('../utils/errorResponse');
 
-const authenticate = (req,res,next)=>{
-    try{
-        const token = req.header.authorization.split(' ')[1]
-        const decode = jwt.verify(token,'secretValue')
-
-        req.user = decode;
-        next()
+const protect = async (req,res,next)=>{
+    console.log(req.headers);
+    let token;
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        token = req.headers.authorization.split(' ')[1];
     }
-    catch(error){
-        if(error.name==="TokenExpiredError"){
-            res.status(401).json({
-                message: "Token expired"
-            })
+    if(!token){
+        return next(new ErrorResponse("Authorization Failed",401));
+    }
+    try{
+        const decode = jwt.verify(token,process.env.JWT_SECRET);
+        const user = await User.findById(decode.id);
+
+        if(!user){
+            return next(new ErrorResponse("No user found with this id",404));
         }
         else{
-            res.json({
-                message:'Authentication failed!'
-            })
-        } 
+            req.user = user;
+            next();
+        }
+        
+    }catch(error){
+        return next(new ErrorResponse("Not authorized to access this route",401));
     }
 }
 
-module.exports = authenticate;
+module.exports = {protect};

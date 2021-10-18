@@ -3,18 +3,27 @@ const jwt = require('jsonwebtoken');
 const ErrorResponse = require('../utils/errorResponse')
 
 const register = async (req,res,next)=>{
+    
     const {name,email,password} = req.body;
+    if(!name || !email || !password){
+        return next(new ErrorResponse("Provide valid name,email,password",400))
+    }
     try{
-        const newUser = await User.create({
-            name,email,password
-        });
-
-        res.status(201).json({
-            message: "success",
-            newUser
-        })
+        const exists = await User.findOne({email:email});
+        if(exists){
+            return next(new ErrorResponse("Already registered!",400));
+        }
+        else{
+            const newUser = await User.create({
+                name,email,password
+            });
+    
+            sendToken(newUser,201,res);
+        }
+        
     }
     catch(error){
+        
         next(error);
     }
 }
@@ -33,10 +42,7 @@ const login = async (req,res,next)=>{
                 return next(new ErrorResponse("Invalid credentials!",400))
             }
             
-            res.status(200).json({
-                success: true,
-                token : 'iahdifhi89489'
-            })
+            sendToken(user,200,res);
         }
     }
     catch(error){
@@ -46,7 +52,7 @@ const login = async (req,res,next)=>{
 }
 const refreshToken = (req,res,next)=>{
     const r_token = req.body.refreshtoken;
-    jwt.verify(refreshtoken,'refreshsecretValue',function(err,decode){
+    jwt.verify(refreshtoken,'refreshsecret Value',function(err,decode){
         if(err){
             res.status(400).json({
                 error: err
@@ -64,8 +70,43 @@ const refreshToken = (req,res,next)=>{
     })
 }
 
-const forgotPassword = (req,res,next)=>{
-    res.send('Forgot Password route');
+const sendToken = (user,statusCode,res)=>{
+    const token = user.getSignedToken();
+    res.status(statusCode).json({
+        success:true,
+        token
+    })
+}
+
+const forgotPassword = async (req,res,next)=>{
+    const {email} = req.body;
+    try{
+        const user = await User.findOne({email});
+        if(!user){
+            return next(new ErrorResponse("Email could not be sent",404));
+        }
+
+        const resetToken = user.getResetPasswordToken();
+
+        await user.save();
+
+        const resetUrl = `http://localhost:5000/passwordreset/${resetToken}`
+
+        const message = `
+        <h1> You have requested a password reset </h1>
+        <p>Please go to this link to reset your password</p>
+        <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
+        `
+        try{
+            
+        }
+        catch(error){
+
+        }
+    }
+    catch(error){
+
+    }
 }
 const resetPassword = (req,res,next)=>{
     res.send('Reset Password route');
