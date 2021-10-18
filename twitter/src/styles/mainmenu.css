@@ -1,9 +1,0 @@
-*{
-    box-sizing: border-box;
-}
-.mainmenu-cnt{
-    /* background-color: rgb(78, 220, 255); */
-    display: grid;
-    grid-template-columns: auto 70%;
-    max-width: 1500px;
-}
